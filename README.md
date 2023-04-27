@@ -1,5 +1,4 @@
 # Printing Money
-
 This project is the final project for my CS5060 Algorithms in Uncertainty class. It covers several different uncertainty algorithms.
 The purpose of this project is to apply these uncertainty algorithms to a small 3D printing business, such as one run on
 Etsy, Shopify, or maybe even Shapeways.
@@ -53,14 +52,14 @@ relies on several variables, including a sales per day median and standard devia
 a random percent chance that a print will fail and one for if all prints fail if a print fails. Each day, the simulation goes through
 the following steps:
 
-    * get a number of sales (`normal(salesMean, salesStddev)`)
-    * add new orders to scheduler
-    * add income for new orders
-    * shift sales mean to the right for each new order
-    * check if the prints that day fail
-    * update the scheduler according to failed prints
-    * reduce filament by number of prints that day
-    * buy new filament if out
+* get a number of sales (`normal(salesMean, salesStddev)`)
+* add new orders to scheduler
+* add income for new orders
+* shift sales mean to the right for each new order
+* check if the prints that day fail
+* update the scheduler according to failed prints
+* reduce filament by number of prints that day
+* buy new filament if out
 
 This simulation is not exhaustive by any means, but it showcases the growth possible through this business method. The volatility is
 scaled by the shifting of the sales mean, which represents getting more sales as popularity increases, and getting less as the return
