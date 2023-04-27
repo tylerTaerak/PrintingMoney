@@ -1,0 +1,254 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage[parfill]{parskip}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    citecolor={blue},
+    urlcolor=blue
+}
+
+\begin{document}
+
+% Title page for document
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1in}
+
+        \Huge
+        \textbf{Printing Money}
+
+        \vspace{0.25in}
+        \LARGE
+        A study on financial gain with 3D printing
+
+        \vspace{1 in}
+
+        \textbf{Tyler Conley}
+
+        \vspace{0.5in}
+        2023-03-21
+
+        \vfill
+    \end{center}
+\end{titlepage}
+
+
+% Executive Summary
+
+\begin{center}
+    \LARGE
+    \textbf{Executive Summary}
+\end{center}
+
+This document and subsequent project discuss the potential financial gain to be made with 3D printing. 3D printing has gained a lot of popularity in recent years, both for hobbyists
+and for professional manufacturing, because it is (relatively) cheap, quick, and easy to customize. This project is focused on earnings with a single printer, though some analysis will
+be made for earnings with multiple printers, predicting the opportunity cost for investing in more machines.
+
+While there are countless YouTube videos advising viewers how to start a 3D printing business, not a lot of them discuss what financial gain one might aim for. Some beginner 3D printing
+hobbyists may find themselves investing lots of money into upgrading their machines and not getting the payoff they were hoping. On the other hand, some might just not try, not realizing
+the potential for gain that they have already.
+
+\bigbreak
+
+\textbf{Problem Statement}
+
+Through this study, I hope to showcase the financial gain possible with 3D printing, as well as some drawbacks that hobbyists may face. This includes failed prints, order turnaround time,
+and material expenditures. There is not much documented regarding personal financial gain from 3D printing, and as such studies like this could help hobbyists engage in supplying rapid prototypes and
+other manufactured objects with a short turnaround time.
+
+\bigbreak
+
+\textbf{Relevance of Project}
+
+For reference, I have 4 years of experience 3D printing, and am aware of the strengths and drawbacks of the manufacturing medium. While there are some other manufacturing tools that can be used
+by a single person with little time (including small CNC mills, laser engravers, and even EDM machines), none of them are quite as practical or well-documented as 3D printers are. This project will
+show to hobbyists and potential entrepreneurs the financial gains they might expect when starting a 3D printing business, as well as drawbacks and potential roadblocks can hinder their gain. This discussion
+of 3D printing finances will hopefully make people aware of the possibilities of the manufacturing technique, and just how important it can be in the modern world.
+
+\bigbreak
+
+\textbf{Conclusion}
+
+This work discusses the finances involved with 3D printing, taken from the perspective of a single person running a single printer, though we will also discuss the difference between one printer
+and multiple printers as well. It also talks about the strengths and drawbacks of using a 3D printer for a business, such as prints failing due to a variety of factors, the length of time required
+to 3D print something, and the ability to customize the things that a person can 3D print. I intend to show concrete results from the simulations that are developed, hopefully showing that 3D printing
+can be utilized by anyone to use as a business.
+
+\bigbreak
+
+% Literature Review
+
+\begin{center}
+    \LARGE
+    \textbf{Literature Review}
+\end{center}
+
+%The \href{https://www.scribbr.com/methodology/literature-review/}{literature review} summarizes, compares, and critiques the most relevant alternative sources
+%on the topic. There are many different ways to structure a literature review, but it should explore:
+
+There are several sources that answer the question, "How do I start a 3D printing business?". However, these articles and videos generally only discuss qualitative
+logistics to getting started, and don't mention either buy-in or expected payoff. This project intends to add to this knowledge by including methods one can follow
+to maximize payoff from 3D printing and run the business in the most efficient way.
+
+\bigbreak
+
+\textbf{Key Concepts, Theories, and Studies}
+
+%Compare, contrast and establish the theories and concepts that will be most important for your project.
+A lot of the articles I looked at only included tips for starting a business, e.g. choose what to print, buy a printer, start an LLC, etc. The things
+I'm looking to analyze are purely quantitative, and so many of these articles are not particularly helpful in building a foundation for this project.
+An article from uschamber.com gives a lot of good statistics for possible deliverables for a 3D printer business.
+
+\bigbreak
+
+\textbf{Key Debates and Controversies}
+
+%Identify points of conflict and situate your position
+One of the numbers that come up in several articles I found is the buy-in price for starting a 3D printer business. A lot of them suggest that the price of a
+3D printer to start with is ~\$1000. \cite{raise3d} \cite{uschamber} I completely disagree with this number, as it is far too high to get started with 3D printing. A Creality Ender-3
+costs less than \$200 \cite{creality}, and is a perfectly serviceable printer for someone looking to get started with 3D printing. Therefore, the buy-in price that I will
+be estimating with will reflect a printer price of \$200, rather than \$1000.
+
+\bigbreak
+
+\textbf{Gaps in Existing Knowledge}
+
+%Show what is missing and how your project will fit in
+Like what has been mentioned before, there is not a lot of quantitative data reflecting the financial gain to be expected from 3D printing. One of the articles
+I found even goes as far to say, "if you find the right combination of diverse products, niche markets, and relevant advertising, and the sky is the limit on your profit." \cite{startllc}
+This reflects the lack of hard data that exists for financial gain that can be found for someone starting a new 3D printing business.
+
+\bigbreak
+
+% Project Design and Methods
+
+\begin{center}
+    \LARGE
+    \textbf{Project design and methods}
+\end{center}
+
+%Here you should explain your approach to the research and describe exactly what steps you will take to answer your questions.
+This project will use several algorithms relating to uncertainty to run many simulations to determine the possible financial gain from 3D printing. These include:
+
+\begin{itemize}
+    \item Monte-Carlo simulations - to simulate growth throughout a single year
+    \item Risk Management - to insure against failed prints
+    \item Scheduling - to schedule orders to be printed such that the least amount of printer downtime occurs
+\end{itemize}
+
+\bigbreak
+
+\textbf{Project Design}
+
+%Explain how you will design the research. \href{https://www.scribbr.com/methodology/qualitative-quantitative-research/}{Qualitative or quantitative?}
+%Original data collection or \href{https://www.scribbr.com/working-with-sources/primary-and-secondary-sources/}{primary/secondary sources?}
+%Descriptive, correlational, or experimental?
+A lot of the required research to get started on this project is statistics. I will need to find out a good starting investment price, which would likely include a
+new 3D printer and some plastic filament. Another statistic I would like to learn more about is how reviews affect the number of future orders. Once I have numbers
+and/or distributions to use, I will be able to start on the research for this project.
+
+The data I'm looking to get is largely quantitative and experimental, which should reflect financial gain throughout a year of a newly-formed 3D printing business.
+It will be collected and documented through software written by myself that implements uncertainty algorithms to make these experiments.
+
+
+\bigbreak
+
+\textbf{Methods and Sources}
+
+%Describe the tools, procedures, participants, and sources of the research. When, where, and how will you collect, select, and analyze data?
+This project will utilize Monte-Carlo simulations to determine potential financial gain throughout a single year. It will use random distributions
+to determine a number of orders received in a day, and determine profit from these orders by calculating expenses (i.e. plastic and power consumption).
+The simulations will implement a risk management algorithm that will be used to insure against printing failures. Additionally, a scheduling algorithm will
+be implemented to determine the most efficient ordering of received orders to maximize printing space and minimizing downtime.
+
+\bigbreak
+
+\textbf{Practical Considerations}
+
+%Address any potential obstacles, limitations, and ethical or practical issues. How will you plan for and deal with problems?
+One notable obstacle that has been mentioned several times in class is the difference between practice and theory. This will just be a simulation,
+and in practice, there are far too many factors to take into account when 3D printing or running a business. As we introduce more variance from these two
+problems into one large simulation, we may find that the difference between the simulations and practice becomes more and more stark.
+
+\bigbreak
+
+% Implications and Contributions to Knowledge
+
+\begin{center}
+    \LARGE
+    \textbf{Implications and contributions to knowledge}
+\end{center}
+
+%Finish the proposal by emphasizing why your proposed project is important and what it will contribute to practice or theory
+This project looks to improve the state of 3D printing for the regular consumer, and will hopefully showcase the effects that one might
+be able to see by 3D printing as a small business.
+
+\bigbreak
+
+\textbf{Practical Implications}
+
+%Will your project or findings help improve a process, inform policy, or make a case for concrete change?
+While this is a very general look at business-style 3D printing, the algorithms used to form this simulation will also be concretely useful
+for those looking to add efficiency to their 3D printing workflow. Specifically, the algorithms to schedule new prints and to insure against
+failed prints will be a boon to anyone 3D printing, whether they are looking to make money from it or not. By reducing the downtime of a 3D printer,
+and by reducing the number of failed prints, we will find that there is a lot less plastic waste made from 3D printing, and that more things can
+be made by it.
+
+\bigbreak
+
+\textbf{Theoretical Implications}
+
+%Will your work help strengthen a theory or model, challenge current assumptions, or create a basis for further research?
+While this project is mostly aimed at improving 3D printing practices, it may also be useful to develop theories about modeling
+business growth. The Monte-Carlo simulations will likely prove to be a good implementation of generic Monte-Carlo methods, and
+will help in the growth of more specialized Monte-Carlo simulations.
+
+% References
+
+%\hangindent=0.25in AuthorLastName, FirstIitial., \& Author LastName, FirstInitial. (Year). Title of article. Title \
+%of Journal, Volume(Issue), Page Number(s). https://doi.org/number
+\begin{thebibliography}{5}
+    \bibitem{raise3d}
+    \hangindent=0.5in How To Start a 3D Printing Business. Raise3D. \href{https://www.raise3d.com/academy/how-to-start-a-3d-printing-business/}{https://www.raise3d.com/academy/how-to-start-a-3d-printing-business/}
+
+    \bibitem{startllc}
+    \hangindent=0.5in How To Start a 3D Printing Design Business. TRUiC. \href{https://howtostartanllc.com/business-ideas/3d-printing}{https://howtostartanllc.com/business-ideas/3d-printing}
+
+    \bibitem{uschamber}
+    \hangindent=0.5in Forstadt, Andrea. 10 Innovative 3D Printing Business Ideas. CO-. \href{https://www.uschamber.com/co/start/business-ideas/3d-printing-business-ideas}{https://www.uschamber.com/co/start/business-ideas/3d-printing-business-ideas}
+
+    \bibitem{creality}
+    \hangindent=0.5in Ender-3. Creality. \href{https://www.creality.com/products/ender-3-3d-printer}{https://www.creality.com/products/ender-3-3d-printer}
+\end{thebibliography}
+
+\bigbreak
+
+% Research Schedule
+
+\begin{center}
+    \LARGE
+    \textbf{Research Schedule}
+
+    \begin{tabular}{| p{2.5in} | p{3in} | p{1.25in} |}
+        \hline
+        Research Phase & Objectives & Deadline \\
+        \hline
+        Find Printing Statistics & Find stats for \% chance of failed prints, \% chance of getting orders, etc. & Apr 1 \\
+        \hline
+        Develop Simulation & Develop Monte-Carlo simulation without additional uncertainty methods & Apr 12 \\
+        \hline
+        Develop Scheduling Algorithm & Develop algorithm for scheduling new orders & Apr 18 \\
+        \hline
+        Develop Insurance Algorithm & Develop algorithm for insuring against failed prints & Apr 22 \\
+        \hline
+        Write up Final Report & Finalize Final Report and Presentation & Apr 24 \\
+        \hline
+    \end{tabular}
+\end{center}
+
+\end{document}

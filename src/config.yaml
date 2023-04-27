@@ -1,0 +1,24 @@
+Filament Price: 25.00     # price of filament per kilo/spool
+Meters Per Spool: 333     # How many meters of filament per (1kg) spool
+
+Profit Margin: 0.25       # desired profit margin
+Power Cost: 0.12          # price per day for power consumption
+
+Probabilities:
+  Print Failure: 0.1      # chance of print failing
+  Other Failure: 0.9      # chance of all prints failing, if a single print fails
+  Printer Failure: 0.01   # chance of the actual printer failing
+  Sales Mean: 0.75        # mean for distribution of sales each day (normal distribution)
+  Sales Stddev: 0.55      # standard deviation for sales distribution
+  Parts Per Order: 2.5    # median number of parts per order
+  Parts Std Dev: 2.0      # std dev for parts per order
+
+Parts:
+  -
+    Name: Part1
+    Filament Used: 22     # meters of filament used (found in slicer)
+    Parts Per Day: 8      # how many of these can we print in a day
+  -
+    Name: Part2
+    Filament Used: 50     # meters of filament used (found in slicer
+    Parts Per Day: 3      # how many of these can we print in a day
