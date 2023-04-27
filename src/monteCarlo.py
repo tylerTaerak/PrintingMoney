@@ -10,8 +10,9 @@ to their heart's content
 import numpy as np
 import matplotlib.pyplot as plt
 
-from userConfigs import Order, Filament, getUserData
+from userConfigs import Order, Part, Filament, getUserData
 from scheduling import Scheduler, SJF_Scheduler
+from insurance import getInsurancePremium
 
 
 def monte_carlo(
@@ -84,7 +85,7 @@ def monte_carlo(
         failChance = np.random.uniform()
 
         # check for part failure
-        if failChance < allFail:
+        if failChance < printFail * allFail:
             fail = 'all'
         elif failChance < printFail:
             fail = 'one'
@@ -116,17 +117,42 @@ def monte_carlo(
 def main(numIterations=1):
     data = getUserData()
 
+    parts = []
+    ppm = data['Filament Price'] / data['Meters Per Spool']
+
+    for part in data['Parts']:
+        basePrice = part['Filament Used'] * ppm
+        profit = basePrice + (basePrice * data['Profit Margin'])
+
+        partsPerPrint = part['Parts Per Day']
+        printFail = data['Probabilities']['Print Failure']
+        allFail = printFail * data['Probabilities']['Other Failure']
+
+        insuredPrice = profit + getInsurancePremium(
+                profit,
+                partsPerPrint,
+                printFail,
+                allFail
+                )
+        # no need to get an accurate price
+        parts.append(Part(
+            part['Name'],
+            part['Filament Used'],
+            partsPerPrint,
+            insuredPrice
+            ))
+
     for i in range(numIterations):
         sim = monte_carlo(
                 data['Probabilities']['Sales Mean'],
                 data['Probabilities']['Sales Stddev'],
                 data['Power Cost'],
-                Filament(data['Filament Price'], data['Meters Per Spool']),
                 SJF_Scheduler(),
+                Filament(data['Filament Price'], data['Meters Per Spool']),
                 data['Probabilities']['Print Failure'],
                 data['Probabilities']['Other Failure']
                 )
-        plt.plot(sim)
+        plt.plot(sim[0])
 
     plt.show()
 

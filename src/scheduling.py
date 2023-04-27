@@ -18,7 +18,7 @@ orders at high priority
 - Multilevel Feedback Queue (MLFQ)
 """
 import copy
-from userConfigs import Order
+from userConfigs import Order, Part, getUserData
 
 
 class Scheduler:
@@ -29,7 +29,6 @@ class Scheduler:
         self.reportData = {}
         self.incomingTimes = {}
         self.fulfilled = {}
-        self.failedCount = 0
 
     def addOrder(self,
                  order: Order
@@ -39,27 +38,36 @@ class Scheduler:
         self.queue.append(order)
         self.incomingTimes[order] = self.time
 
-    def update(self, empty=False):
+    def update(self, partsMissing='none'):
+        if len(self.queue) == 0:
+            return 0
+        self.reportData[self.time] = []
+        if partsMissing == 'none':
+            self._updateRecursive(self.queue[0].part.printsPerDay)
+        elif partsMissing == 'one':
+            self._updateRecursive(self.queue[0].part.printsPerDay-1)
+        elif partsMissing == 'all':
+            self._updateRecursive(0)
+        self.time += 1
+
         raise NotImplementedError
 
     def _updateRecursive(self, numParts):
-        if len(self.queue) == 0:
-            return
         order = self.queue[0]
-        order.numParts -= order.part.printsPerDay
+        order.numParts -= numParts
         if not order.numParts > 0:
             self.fulfilled[order] = self.time
             self.queue.remove(order)
             self.reportData[self.time].append(f"Order {order.orderId} - \
-{order.part.printsPerDay - (-order.numParts)}")
+{numParts + order.numParts}")
             if len(self.queue) == 0:
                 return
 
-            if order.part == self.queue[0].part:
+            if order.part == self.queue[0].part and order.numParts < 0:
                 self._updateRecursive(numParts=-order.numParts)
         else:
             self.reportData[self.time].append(f"Order {order.orderId} - \
-{order.part.printsPerDay}")
+{numParts}")
 
     def hasOrders(self):
         return bool(len(self.queue))
@@ -81,41 +89,27 @@ class Scheduler:
 
 class FCFS_Scheduler(Scheduler):
     def update(self, partsMissing='none'):
-        if len(self.queue) == 0:
+        if (len(self.queue) == 0):
             return 0
-        self.reportData[self.time] = []
         order = self.queue[0]
-        if partsMissing == 'none':
-            self.failedCount += min(self.queue[0].part.printsPerDay,
-                                    self.queue[0].numParts)
-            self._updateRecursive(self.queue[0].part.printsPerDay)
-        elif partsMissing == 'one':
-            self.failedCount += 1
-            self._updateRecursive(self.queue[0].part.printsPerDay-1)
-        elif partsMissing == 'all':
-            self._updateRecursive(0)
-        self.time += 1
-
+        try:
+            super().update(partsMissing)
+        except NotImplementedError:
+            pass
         return order.part.printsPerDay * order.part.filamentUsed
 
 
 class SJF_Scheduler(Scheduler):
     def update(self, partsMissing='none'):
         self.queue.sort(key=lambda x: x.numParts)
-        if len(self.queue) == 0:
+        if (len(self.queue) == 0):
             return 0
-        self.reportData[self.time] = []
         order = self.queue[0]
-        if partsMissing == 'none':
-            self.failedCount += min(self.queue[0].part.printsPerDay,
-                                    self.queue[0].numParts)
-            self._updateRecursive(self.queue[0].part.printsPerDay)
-        elif partsMissing == 'one':
-            self.failedCount += 1
-            self._updateRecursive(self.queue[0].part.printsPerDay-1)
-        elif partsMissing == 'all':
-            self._updateRecursive(0)
-        self.time += 1
+        try:
+            super().update(partsMissing)
+        except NotImplementedError:
+            pass
+        return order.part.printsPerDay * order.part.filamentUsed
 
         return order.part.printsPerDay * order.part.filamentUsed
 
@@ -128,32 +122,39 @@ class RR_Scheduler(Scheduler):
     def update(self, partsMissing='none'):
         if len(self.queue) == 0:
             return 0
-        if self.time % self.quantum == 0:
+        order = self.queue[0]
+        try:
+            super().update(partsMissing)
+        except NotImplementedError:
+            pass
+        if self.time % self.quantum == 0 and len(self.queue) > 0:
             self.queue.append(self.queue[0])
             self.queue.pop(0)
-        self.reportData[self.time] = []
-        order = self.queue[0]
-        if partsMissing == 'none':
-            self.failedCount += min(self.queue[0].part.printsPerDay,
-                                    self.queue[0].numParts)
-            self._updateRecursive(self.queue[0].part.printsPerDay)
-        elif partsMissing == 'one':
-            self.failedCount += 1
-            self._updateRecursive(self.queue[0].part.printsPerDay-1)
-        elif partsMissing == 'all':
-            self._updateRecursive(0)
-        self.time += 1
-
         return order.part.printsPerDay * order.part.filamentUsed
 
 
 if __name__ == "__main__":
+    data = getUserData()
     numOrders = 50
     schedulers = {
             "FCFS": FCFS_Scheduler(),
             "SJF": SJF_Scheduler(),
             "RR": RR_Scheduler()
             }
+
+    parts = []
+
+    for part in data['Parts']:
+        partsPerPrint = part['Parts Per Day']
+
+        # no need to get an accurate price
+        parts.append(Part(
+            part['Name'],
+            part['Filament Used'],
+            partsPerPrint,
+            0.0
+            ))
+
     for _ in range(numOrders):
         order = Order.genRandomOrder()
         for s in schedulers.values():
