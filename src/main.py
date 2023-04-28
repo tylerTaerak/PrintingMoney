@@ -166,6 +166,8 @@ if __name__ == "__main__":
 
     print(f"Average Profit: {round(avgProfit, 2)} ({profitPercent * 100}%)")
 
+    plt.xlabel("Net Gain (USD)")
+    plt.ylabel("Time (Days)")
     plt.show()
 
     print("\nComplete!")

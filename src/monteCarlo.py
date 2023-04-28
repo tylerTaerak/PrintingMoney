@@ -154,6 +154,9 @@ def main(numIterations=1):
                 )
         plt.plot(sim[0])
 
+    plt.xlabel("Net Gain (USD)")
+    plt.ylabel("Time (Days)")
+
     plt.show()
 
 
